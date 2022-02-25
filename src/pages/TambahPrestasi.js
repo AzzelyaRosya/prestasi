@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { List, ListItem, Container, Grid, ListItemIcon, ListItemText, Alert, Button, Snackbar, Typography, Divider } from '@mui/material';
+import { List, ListItem, Container, Grid, ListItemIcon, ListItemText, Button, Snackbar, Typography, Divider, Box, ListItemButton, Backdrop } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
 import Navbar from '../components/Navbar';
 import tambahData from '../components/DataTambahPrestasi';
 
@@ -10,19 +11,19 @@ import SettingsApplicationsOutlinedIcon from '@mui/icons-material/SettingsApplic
 import DateRangeOutlinedIcon from '@mui/icons-material/DateRangeOutlined';
 import NotesOutlinedIcon from '@mui/icons-material/NotesOutlined';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
+import CircularProgress from '@mui/material/CircularProgress';
 
-const style = {
-  width: '100%',
-  height: 60,
-  maxWidth: 700,
-  bgcolor: 'background.paper',
-};
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function TambahPrestasi() {
   const [open, setOpen] = React.useState(false);
+
   const handleClick = () => {
     setOpen(true);
   };
+
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -35,19 +36,21 @@ export default function TambahPrestasi() {
     <>
       <Container>
         <Navbar>Tambah Prestasi</Navbar>
-        <Grid item xs={12} md={6}>
+        <Grid style={{ width: '100%' }}>
           <Typography sx={{ mt: 10, mb: 2, fontWeight: 'bold' }} variant="h6" component="div">
             Nama Kegiatan
           </Typography>
 
           {tambahData.map((x, index) => (
-            <List key={index} sx={style} component="nav" aria-label="mailbox folders">
-              <ListItem>
-                <ListItemIcon style={{ color: '#F78104' }}>{x.icon}</ListItemIcon>
-                <ListItemText primary={x.title} />
-              </ListItem>
+            <Box key={index} sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }} fullWidth label="fullWidth" id="fullWidth">
+              <List sx={{ pt: 2, pb: 2 }}>
+                <ListItem disablePadding>
+                  <ListItemIcon style={{ color: '#F78104' }}>{x.icon}</ListItemIcon>
+                  <ListItemText primary={x.title} />
+                </ListItem>
+              </List>
               <Divider />
-            </List>
+            </Box>
           ))}
 
           <Grid item xs={12}>
@@ -57,6 +60,7 @@ export default function TambahPrestasi() {
               color="warning"
               onClick={handleClick}
               sx={{
+                mt: 40,
                 width: '100%',
                 height: 45,
                 fontSize: 15,
@@ -70,11 +74,11 @@ export default function TambahPrestasi() {
             </Button>
 
             {/* Snackbar */}
-            <Snackbar open={open} autoHideDuration={700} onClose={handleClose}>
-              <Alert onClose={handleClose} severity="success" sx={{ width: '60%' }}>
-                Form telah terkirim!
+            {/* <Snackbar open={open} autoHideDuration={1000} onClose={handleClose}>
+              <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                Form Terkirim!
               </Alert>
-            </Snackbar>
+            </Snackbar> */}
           </Grid>
         </Grid>
       </Container>

@@ -1,7 +1,7 @@
 import React from 'react';
-// Import Component MUI
 import { AppBar, Box, IconButton, Typography } from '@mui/material';
-// Import Icon
+
+// icon
 import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
 import { Link } from 'react-router-dom';
 

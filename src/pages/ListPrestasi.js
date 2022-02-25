@@ -50,7 +50,7 @@ export default function ListPrestasi() {
                 value={searchText}
                 onChange={(e) => handleChange(e.target.value)}
                 align="center"
-                style={{ height: 57, backgroundColor: '#f2f2f2', width: '100%' }}
+                style={{ height: 57, backgroundColor: '#f2f2f2', width: '100%', marginBottom: 10 }}
                 placeholder="Search"
                 InputProps={{
                   startAdornment: (
@@ -64,17 +64,17 @@ export default function ListPrestasi() {
                 sx={{
                   borderRadius: 7,
                   '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#cccccc',
+                    borderColor: '#e6e6e6',
                     borderRadius: 7,
                   },
                   '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#cccccc',
+                    borderColor: '#e6e6e6',
                     borderRadius: 7,
                   },
                   '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
                     border: 2,
                     borderRadius: 7,
-                    borderColor: '#cccccc',
+                    borderColor: '#e6e6e6',
                   },
                 }}
               />
@@ -90,7 +90,7 @@ export default function ListPrestasi() {
 
         {/* card */}
         {data.map((x, index) => (
-          <Card elevation={2} key={index} sx={{ maxWidth: 5000, my: 1, p: 2, mt: 3 }} style={{ backgroundColor: '#fff' }}>
+          <Card elevation={2} key={index} sx={{ maxWidth: 5000, my: 1, p: 2, mt: 2 }} style={{ backgroundColor: '#fff' }}>
             <Grid container wrap="nowrap" spacing={2}>
               <Grid item>
                 <Avatar sx={{ width: 80, height: 80 }} src={x.ava}></Avatar>
@@ -98,9 +98,16 @@ export default function ListPrestasi() {
               <Grid item xs>
                 <Typography style={{ fontSize: 20, fontWeight: 'bold' }}>{x.title}</Typography>
                 <Typography style={{ fontSize: 15, fontWeight: 'bold', marginTop: -2 }}>{x.nama}</Typography>
-                <Typography color="text.secondary" style={{ fontSize: 14, fontWeight: 'bold' }} sx={{ mt: 2 }}>
-                  {x.date}
-                </Typography>
+                <Grid item xs container direction="row">
+                  <Grid item xs>
+                    <Typography color="text.secondary" style={{ fontSize: 14, fontWeight: 'bold' }} sx={{ mt: 2 }}>
+                      {x.date}
+                    </Typography>
+                  </Grid>
+                  <Grid item sx={{ pr: 1 }}>
+                    <img src={`${x.medal}`} style={{ width: 25, height: 30 }} />{' '}
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </Card>
@@ -113,15 +120,8 @@ export default function ListPrestasi() {
                 onClick
                 variant="contained"
                 color="warning"
-                style={{
-                  //border radius img
-                  borderBottomLeftRadius: 10,
-                  borderBottomRightRadius: 10,
-                  borderTopRightRadius: 10,
-                  borderTopLeftRadius: 10,
-                  overflow: 'hidden',
-                }}
                 sx={{
+                  borderRadius: 2,
                   mt: 0,
                   mb: 3,
                   width: 50,
