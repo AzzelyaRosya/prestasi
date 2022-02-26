@@ -113,27 +113,27 @@ export default function ListPrestasi() {
           </Card>
         ))}
 
-        <Grid container justifyContent="right">
-          <Grid item align="right">
-            <Link to="/tambah-prestasi" style={{ textDecoration: 'none' }}>
-              <Button
-                onClick
-                variant="contained"
-                color="warning"
-                sx={{
-                  borderRadius: 2,
-                  mt: 0,
-                  mb: 3,
-                  width: 50,
-                  height: 60,
-                  fontSize: 30,
-                  textDecoration: 'none',
-                }}
-              >
-                +
-              </Button>
-            </Link>
-          </Grid>
+        {/* button */}
+        <Grid className="buttonplus" container justifyContent="right">
+          <Link to="/tambah-prestasi" style={{ textDecoration: 'none' }}>
+            <Button
+              className="buttonkece"
+              onClick
+              variant="contained"
+              color="warning"
+              sx={{
+                mb: 2,
+                mr: 2,
+                borderRadius: 2,
+                width: 50,
+                height: 60,
+                fontSize: 30,
+                textDecoration: 'none',
+              }}
+            >
+              +
+            </Button>
+          </Link>
         </Grid>
       </Container>
     </>
