@@ -7,16 +7,16 @@ import NotesOutlinedIcon from '@mui/icons-material/NotesOutlined';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 
 const tambahData = [
-  {
-    id: 1,
-    icon: <EmojiEventsOutlinedIcon />,
-    title: 'Jenis Prestasi',
-  },
-  {
-    id: 2,
-    icon: <StarBorderIcon />,
-    title: 'Tingkatan',
-  },
+  // {
+  //   id: 1,
+  //   icon: <EmojiEventsOutlinedIcon />,
+  //   title: 'Jenis Prestasi',
+  // },
+  // {
+  //   id: 2,
+  //   icon: <StarBorderIcon />,
+  //   title: 'Tingkatan',
+  // },
   {
     id: 3,
     icon: <SettingsApplicationsOutlinedIcon />,

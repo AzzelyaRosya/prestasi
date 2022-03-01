@@ -24,7 +24,7 @@ const prestasiData = [
   {
     id: 2,
     ava: two,
-    title: 'Senior Asia Karate Championship ke-15',
+    title: 'Karate at the 2018 Asian Games',
     nama: 'Asep Muhammad Mahesa',
     date: '18 Desember 2018',
     medal: satu,
@@ -32,7 +32,7 @@ const prestasiData = [
   {
     id: 3,
     ava: three,
-    title: 'Senior Asia Karate Championship ke-16',
+    title: 'Karate at the 2019 SEA Games',
     nama: 'Kirana Cantika Jelita',
     date: '16 November 2019',
     medal: tiga,
@@ -40,7 +40,7 @@ const prestasiData = [
   {
     id: 4,
     ava: four,
-    title: 'Senior Asia Karate Championship ke-18',
+    title: 'U21 Karate Championship 2021',
     nama: 'Muhammad Fikri',
     date: '10 Desember 2021',
     medal: satu,
@@ -48,7 +48,7 @@ const prestasiData = [
   {
     id: 5,
     ava: five,
-    title: 'Senior Asia Karate Championship ke-15',
+    title: 'WKF Youth Camp',
     nama: 'Muhammad Tegar Supratman',
     date: '18 Desember 2018',
     medal: dua,
@@ -56,7 +56,7 @@ const prestasiData = [
   {
     id: 6,
     ava: six,
-    title: 'Senior Asia Karate Championship ke-16',
+    title: 'Karate -1 Series A',
     nama: 'Puput Teresa',
     date: '16 November 2019',
     medal: satu,
@@ -64,7 +64,7 @@ const prestasiData = [
   {
     id: 7,
     ava: seven,
-    title: 'Senior Asia Karate Championship ke-18',
+    title: 'FISU UWC Combat Sports',
     nama: 'Samuel Ekawan',
     date: '10 Desember 2021',
     medal: tiga,

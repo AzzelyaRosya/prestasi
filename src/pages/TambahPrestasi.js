@@ -21,57 +21,56 @@ import {
   Radio,
   RadioGroup,
   FormControlLabel,
+  TextField,
+  Input,
+  InputLabel,
+  InputAdornment,
+  FormControl,
 } from '@mui/material';
 import Navbar from '../components/Navbar';
 import tambahData from '../components/DataTambahPrestasi';
 import ButtonSubmit from '../components/ButtonSubmit';
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { orange } from '@mui/material/colors';
+
+// icon
+import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 const options = ['Internasional', 'Asia', 'ASEAN', 'Nasional', 'Provinsi'];
 
+const CustomCheckbox = styled(RadioGroup)(({ theme }) => ({
+  color: theme.status.danger,
+  '&.Mui-checked': {
+    color: theme.status.danger,
+  },
+}));
+
+const theme = createTheme({
+  status: {
+    danger: orange[500],
+  },
+});
+
 function DialogTambahPrestasi(props) {
   const { onClose, value: valueProp, open, ...other } = props;
-  const [value, setValue] = React.useState(valueProp);
-  const radioGroupRef = React.useRef(null);
 
-  React.useEffect(() => {
-    if (!open) {
-      setValue(valueProp);
-    }
-  }, [valueProp, open]);
+  // React.useEffect(() => {
+  //   if (!open) {
+  //     setValue(valueProp);
+  //   }
+  // }, [valueProp, open]);
 
-  const handleEntering = () => {
-    if (radioGroupRef.current != null) {
-      radioGroupRef.current.focus();
-    }
-  };
-
-  const handleCancel = () => {
-    onClose();
-  };
-
-  const handleOk = () => {
-    onClose(value);
-  };
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+  // const handleEntering = () => {
+  //   if (radioGroupRef.current != null) {
+  //     radioGroupRef.current.focus();
+  //   }
+  // };
 
   return (
-    <Dialog sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }} maxWidth="xs" TransitionProps={{ onEntering: handleEntering }} open={open} {...other}>
-      <DialogContent dividers>
-        <RadioGroup ref={radioGroupRef} aria-label="ringtone" name="ringtone" value={value} onChange={handleChange}>
-          {options.map((option) => (
-            <FormControlLabel color="warning" value={option} key={option} control={<Radio />} label={option} />
-          ))}
-        </RadioGroup>
-      </DialogContent>
-      <DialogActions>
-        <Button autoFocus onClick={handleCancel}>
-          Cancel
-        </Button>
-        <Button onClick={handleOk}>Ok</Button>
-      </DialogActions>
+    <Dialog sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 }, color: '#F78104' }} maxWidth="xs" open={open} {...other}>
+      <DialogContent dividers>{props.content}</DialogContent>
+      <DialogActions color="warning">{props.action}</DialogActions>
     </Dialog>
   );
 }
@@ -84,6 +83,9 @@ DialogTambahPrestasi.propTypes = {
 
 export default function TambahPrestasi() {
   const [open, setOpen] = React.useState(false);
+  const [tingkatan, setTingkatan] = React.useState('');
+  const radioGroupRef = React.useRef(null);
+
   const [value, setValue] = React.useState('Dione');
 
   const handleClickListItem = () => {
@@ -98,6 +100,18 @@ export default function TambahPrestasi() {
     }
   };
 
+  const handleChange = (event) => {
+    setTingkatan(event.target.value);
+  };
+
+  const handleCancel = () => {
+    handleClose();
+  };
+
+  const handleOk = () => {
+    handleClose(value);
+  };
+
   return (
     <>
       <Container>
@@ -107,15 +121,37 @@ export default function TambahPrestasi() {
             Nama Kegiatan
           </Typography>
 
-          {tambahData.map((x, index) => (
-            <Box key={index} sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }} fullWidth label="fullWidth" id="fullWidth">
-              <List sx={{ pt: 2, pb: 2 }} component="div" role="group">
-                <ListItem button divider aria-haspopup="true" aria-controls="ringtone-menu" aria-label="phone ringtone" onClick={handleClickListItem}>
-                  <ListItemIcon style={{ color: '#F78104' }}>{x.icon}</ListItemIcon>
-                  <ListItemText primary={x.title} />
-                </ListItem>
+          <Box sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
+            <List sx={{ pt: 2, pb: 2 }} component="div" role="group">
+              <Grid sx={{ display: 'flex', alignItems: 'flex-end', fontSize: 10 }}>
+                <Grid sx={{ mr: 3, color: '#F78104' }}>
+                  <EmojiEventsOutlinedIcon />
+                </Grid>
+                <TextField fullWidth label="fullWidth" id="fullWidth" color="warning" id="input-with-sx" label="Jenis Prestasi" variant="standard" />
+              </Grid>
+            </List>
+          </Box>
 
-                <DialogTambahPrestasi id="ringtone-menu" keepMounted open={open} onClose={handleClose} value={value} />
+          <Box sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
+            <List sx={{ pt: 2, pb: 2 }} component="div" role="group">
+              <Grid onClick={handleClickListItem} sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                <Grid sx={{ mr: 3, color: '#F78104' }}>
+                  <StarBorderIcon />{' '}
+                </Grid>
+                <TextField value={tingkatan} fullWidth label="fullWidth" id="fullWidth" color="warning" id="input-with-sx" label="Tingkatan" variant="standard" />
+              </Grid>
+
+              <DialogTambahPrestasi id="ringtone-menu" keepMounted open={open} onClose={handleClose} value={value} />
+            </List>
+          </Box>
+
+          {tambahData.map((x, index) => (
+            <Box sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
+              <List sx={{ pt: 2, pb: 2 }} component="div" role="group">
+                <Grid sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                  <Grid sx={{ mr: 3, color: '#F78104' }}>{x.icon}</Grid>
+                  <TextField fullWidth label="fullWidth" id="fullWidth" color="warning" id="input-with-sx" label={x.title} variant="standard" />
+                </Grid>
               </List>
             </Box>
           ))}
@@ -124,6 +160,26 @@ export default function TambahPrestasi() {
             <ButtonSubmit />
           </Grid>
         </Grid>
+        <DialogTambahPrestasi
+          open={open}
+          content={
+            <RadioGroup ref={radioGroupRef} aria-label="ringtone" name="ringtone" value={tingkatan} onChange={handleChange}>
+              {options.map((option) => (
+                <FormControlLabel color="warning" value={option} key={option} control={<Radio />} label={option} />
+              ))}
+            </RadioGroup>
+          }
+          action={
+            <>
+              <Button color="warning" autoFocus onClick={handleCancel}>
+                Cancel
+              </Button>
+              <Button color="warning" onClick={handleOk}>
+                Ok
+              </Button>
+            </>
+          }
+        />
       </Container>
     </>
   );

@@ -3,3 +3,7 @@
   bottom: 0;
   right: 0;
 }
+
+.MuiFilledInput-root {
+  background-color: '#000';
+}
