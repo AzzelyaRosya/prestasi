@@ -28,7 +28,6 @@ import {
   FormControl,
 } from '@mui/material';
 import Navbar from '../components/Navbar';
-import tambahData from '../components/DataTambahPrestasi';
 import ButtonSubmit from '../components/ButtonSubmit';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { orange } from '@mui/material/colors';
@@ -36,6 +35,10 @@ import { orange } from '@mui/material/colors';
 // icon
 import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import SettingsApplicationsOutlinedIcon from '@mui/icons-material/SettingsApplicationsOutlined';
+import DateRangeOutlinedIcon from '@mui/icons-material/DateRangeOutlined';
+import NotesOutlinedIcon from '@mui/icons-material/NotesOutlined';
+import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 
 const options = ['Internasional', 'Asia', 'ASEAN', 'Nasional', 'Provinsi'];
 
@@ -121,40 +124,81 @@ export default function TambahPrestasi() {
             Nama Kegiatan
           </Typography>
 
+          {/* Jenis Prestasi */}
           <Box sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
             <List sx={{ pt: 2, pb: 2 }} component="div" role="group">
               <Grid sx={{ display: 'flex', alignItems: 'flex-end', fontSize: 10 }}>
                 <Grid sx={{ mr: 3, color: '#F78104' }}>
                   <EmojiEventsOutlinedIcon />
                 </Grid>
-                <TextField fullWidth label="fullWidth" id="fullWidth" color="warning" id="input-with-sx" label="Jenis Prestasi" variant="standard" />
+                <TextField InputProps={{ disableUnderline: true }} fullWidth label="fullWidth" id="fullWidth" color="warning" id="input-with-sx" label="Jenis Prestasi" variant="standard" />
               </Grid>
             </List>
           </Box>
 
+          {/* Tingkatan */}
           <Box sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
             <List sx={{ pt: 2, pb: 2 }} component="div" role="group">
               <Grid onClick={handleClickListItem} sx={{ display: 'flex', alignItems: 'flex-end' }}>
                 <Grid sx={{ mr: 3, color: '#F78104' }}>
                   <StarBorderIcon />{' '}
                 </Grid>
-                <TextField value={tingkatan} fullWidth label="fullWidth" id="fullWidth" color="warning" id="input-with-sx" label="Tingkatan" variant="standard" />
+                <TextField InputProps={{ disableUnderline: true }} value={tingkatan} fullWidth label="fullWidth" id="fullWidth" color="warning" id="input-with-sx" label="Tingkatan" variant="standard" />
               </Grid>
 
               <DialogTambahPrestasi id="ringtone-menu" keepMounted open={open} onClose={handleClose} value={value} />
             </List>
           </Box>
 
-          {tambahData.map((x, index) => (
-            <Box sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
-              <List sx={{ pt: 2, pb: 2 }} component="div" role="group">
-                <Grid sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                  <Grid sx={{ mr: 3, color: '#F78104' }}>{x.icon}</Grid>
-                  <TextField fullWidth label="fullWidth" id="fullWidth" color="warning" id="input-with-sx" label={x.title} variant="standard" />
+          {/* Nomor Pertandingan */}
+
+          <Box sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
+            <List sx={{ pt: 2, pb: 2 }} component="div" role="group">
+              <Grid sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                <Grid sx={{ mr: 3, color: '#F78104' }}>
+                  <SettingsApplicationsOutlinedIcon />
                 </Grid>
-              </List>
-            </Box>
-          ))}
+                <TextField InputProps={{ disableUnderline: true }} fullWidth label="fullWidth" id="fullWidth" color="warning" id="input-with-sx" label="Nomor Pertandingan" variant="standard" />
+              </Grid>
+            </List>
+          </Box>
+
+          {/* Tanggal Pertandingan */}
+          <Box sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
+            <List sx={{ pt: 2, pb: 2 }} component="div" role="group">
+              <Grid sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                <Grid sx={{ mr: 3, color: '#F78104' }}>
+                  <DateRangeOutlinedIcon />
+                </Grid>
+                <TextField InputProps={{ disableUnderline: true }} fullWidth label="fullWidth" id="fullWidth" color="warning" id="input-with-sx" label="Tanggal Pertandingan" variant="standard" />
+              </Grid>
+            </List>
+          </Box>
+
+          {/* Deskripsi */}
+
+          <Box sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
+            <List sx={{ pt: 2, pb: 2 }} component="div" role="group">
+              <Grid sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                <Grid sx={{ mr: 3, color: '#F78104' }}>
+                  <NotesOutlinedIcon />
+                </Grid>
+                <TextField InputProps={{ disableUnderline: true }} fullWidth label="fullWidth" id="fullWidth" color="warning" id="input-with-sx" label="Deskripsi" variant="standard" />
+              </Grid>
+            </List>
+          </Box>
+
+          {/* Tambahkan Partisipan */}
+          <Box sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
+            <List sx={{ pt: 2, pb: 2 }} component="div" role="group">
+              <Grid sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                <Grid sx={{ mr: 3, color: '#F78104' }}>
+                  <PeopleAltOutlinedIcon />
+                </Grid>
+                <TextField InputProps={{ disableUnderline: true }} fullWidth label="fullWidth" id="fullWidth" color="warning" id="input-with-sx" label="Tambahkan Partisipan" variant="standard" />
+              </Grid>
+            </List>
+          </Box>
 
           <Grid item xs={12}>
             <ButtonSubmit />
@@ -165,7 +209,7 @@ export default function TambahPrestasi() {
           content={
             <RadioGroup ref={radioGroupRef} aria-label="ringtone" name="ringtone" value={tingkatan} onChange={handleChange}>
               {options.map((option) => (
-                <FormControlLabel color="warning" value={option} key={option} control={<Radio />} label={option} />
+                <FormControlLabel color="warning" value={option} key={option} control={<Radio color="warning" />} label={option} />
               ))}
             </RadioGroup>
           }
