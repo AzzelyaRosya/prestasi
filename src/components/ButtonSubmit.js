@@ -62,7 +62,7 @@ export default function ButtonSubmit() {
             width: '95%',
           }}
         >
-          <SaveButton onClick={handleClick} variant="contained" disableRipple>
+          <SaveButton input type="submit" onClick={handleClick} variant="contained" disableRipple>
             Submit
           </SaveButton>
         </Box>

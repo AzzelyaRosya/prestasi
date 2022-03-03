@@ -8,11 +8,11 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {/* <Switch>
+        <Switch>
           <Route path="/" exact component={ListPrestasi} />
           <Route path="/tambah-prestasi" component={TambahPrestasi} />
-        </Switch> */}
-        <ExpandPrestasi />
+        </Switch>
+        {/* <ExpandPrestasi /> */}
       </div>
     </Router>
   );
