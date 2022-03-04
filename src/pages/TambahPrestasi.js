@@ -87,6 +87,7 @@ DialogTambahPrestasi.propTypes = {
 export default function TambahPrestasi() {
   const [open, setOpen] = React.useState(false);
   const radioGroupRef = React.useRef(null);
+  const [kegiatan, setKegiatan] = React.useState('');
   const [jenis, setJenis] = React.useState('');
   const [tingkatan, setTingkatan] = React.useState('');
   const [nomor, setNomor] = React.useState('');
@@ -97,38 +98,13 @@ export default function TambahPrestasi() {
 
   const handleSubmit = function (event) {
     event.preventDefault();
-    console.log(`\n`, `Jenis Prestasi: ${jenis}`, `\n`, `Tingkatan: ${tingkatan}`, `\n`, `Nomor: ${nomor}`, `\n`, `Tanggal: ${tanggal}`, `\n`, `Deskripsi: ${deskripsi}`, `\n`, `Partisipan: ${partisipan}`);
+    console.log(`Nama Kegiatan: ${kegiatan}`, `\n`, `Jenis Prestasi: ${jenis}`, `\n`, `Tingkatan: ${tingkatan}`, `\n`, `Nomor: ${nomor}`, `\n`, `Tanggal: ${tanggal}`, `\n`, `Deskripsi: ${deskripsi}`, `\n`, `Partisipan: ${partisipan}`);
   };
 
   const handleTingkatan = (event) => {
     setTingkatan(event.target.value);
     console.log(event.target.value);
   };
-
-  // const handleJenis = (event) => {
-  //   setJenis(event.target.value);
-  //   console.log(event.target.value);
-  // };
-
-  // const handleNomor = (event) => {
-  //   setNomor(event.target.value);
-  //   console.log(event.target.value);
-  // };
-
-  // const handleTanggal = (event) => {
-  //   setTanggal(event.target.value);
-  //   console.log(event.target.value);
-  // };
-
-  // const handleDeskripsi = (event) => {
-  //   setDeskripsi(event.target.value);
-  //   console.log(event.target.value);
-  // };
-
-  // const handlePartisipan = (event) => {
-  //   setPartisipan(event.target.value);
-  //   console.log(event.target.value);
-  // };
 
   const handleClickListItem = () => {
     setOpen(true);
@@ -158,12 +134,12 @@ export default function TambahPrestasi() {
     <>
       <Container>
         <Navbar>Tambah Prestasi</Navbar>
-        <Grid style={{ width: '100%', fontSize: '20px' }}>
-          <Typography sx={{ mt: 10, mb: 2, fontWeight: 'bold' }} variant="h6" component="div">
-            Nama Kegiatan
-          </Typography>
+        <form onSubmit={handleSubmit} autocomplete="off">
+          <Grid style={{ width: '100%', fontSize: '20px' }}>
+            <Typography sx={{ mt: 10, mb: 2, fontWeight: 'bold' }} variant="h6" component="div">
+              <TextField InputProps={{ disableUnderline: true }} value={kegiatan} onChange={(e) => setKegiatan(e.target.value)} fullWidth color="warning" placeholder="Nama Kegiatan" variant="standard" />
+            </Typography>
 
-          <form onSubmit={handleSubmit}>
             {/* Jenis Prestasi */}
             <Box sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
               <List sx={{ pt: 2, pb: 2 }} component="div" role="group">
@@ -171,18 +147,7 @@ export default function TambahPrestasi() {
                   <Grid sx={{ mr: 3, color: '#F78104' }}>
                     <EmojiEventsOutlinedIcon />
                   </Grid>{' '}
-                  <TextField
-                    InputProps={{ disableUnderline: true }}
-                    value={jenis}
-                    onChange={(e) => setJenis(e.target.value)}
-                    fullWidth
-                    label="fullWidth"
-                    id="fullWidth"
-                    color="warning"
-                    id="input-with-sx"
-                    label="Jenis Prestasi"
-                    variant="standard"
-                  />
+                  <TextField InputProps={{ disableUnderline: true }} value={jenis} onChange={(e) => setJenis(e.target.value)} fullWidth color="warning" placeholder="Jenis Prestasi" variant="standard" />
                 </Grid>
               </List>
             </Box>
@@ -194,19 +159,7 @@ export default function TambahPrestasi() {
                   <Grid sx={{ mr: 3, color: '#F78104' }}>
                     <StarBorderIcon />{' '}
                   </Grid>
-                  <TextField
-                    InputProps={{ disableUnderline: true }}
-                    value={tingkatan}
-                    onChange={(e) => setTingkatan(e.target.value)}
-                    value={tingkatan}
-                    fullWidth
-                    label="fullWidth"
-                    id="fullWidth"
-                    color="warning"
-                    id="input-with-sx"
-                    label="Tingkatan"
-                    variant="standard"
-                  />
+                  <TextField InputProps={{ disableUnderline: true }} value={tingkatan} onChange={(e) => setTingkatan(e.target.value)} value={tingkatan} fullWidth color="warning" placeholder="Tingkatan" variant="standard" />
                 </Grid>
 
                 <DialogTambahPrestasi id="ringtone-menu" keepMounted open={open} onClose={handleClose} value={value} />
@@ -221,18 +174,7 @@ export default function TambahPrestasi() {
                   <Grid sx={{ mr: 3, color: '#F78104' }}>
                     <SettingsApplicationsOutlinedIcon />
                   </Grid>
-                  <TextField
-                    InputProps={{ disableUnderline: true }}
-                    value={nomor}
-                    onChange={(e) => setNomor(e.target.value)}
-                    fullWidth
-                    label="fullWidth"
-                    id="fullWidth"
-                    color="warning"
-                    id="input-with-sx"
-                    label="Nomor Pertandingan"
-                    variant="standard"
-                  />
+                  <TextField InputProps={{ disableUnderline: true }} value={nomor} onChange={(e) => setNomor(e.target.value)} fullWidth color="warning" id="input-with-sx" type="number" placeholder="Nomor Pertandingan" variant="standard" />
                 </Grid>
               </List>
             </Box>
@@ -244,18 +186,7 @@ export default function TambahPrestasi() {
                   <Grid sx={{ mr: 3, color: '#F78104' }}>
                     <DateRangeOutlinedIcon />
                   </Grid>
-                  <TextField
-                    InputProps={{ disableUnderline: true }}
-                    value={tanggal}
-                    onChange={(e) => setTanggal(e.target.value)}
-                    fullWidth
-                    label="fullWidth"
-                    id="fullWidth"
-                    color="warning"
-                    id="input-with-sx"
-                    label="Tanggal Pertandingan"
-                    variant="standard"
-                  />
+                  <TextField InputProps={{ disableUnderline: true }} value={tanggal} onChange={(e) => setTanggal(e.target.value)} fullWidth color="warning" placeholder="Tanggal Pertandingan" variant="standard" />
                 </Grid>
               </List>
             </Box>
@@ -268,18 +199,7 @@ export default function TambahPrestasi() {
                   <Grid sx={{ mr: 3, color: '#F78104' }}>
                     <NotesOutlinedIcon />
                   </Grid>
-                  <TextField
-                    InputProps={{ disableUnderline: true }}
-                    value={deskripsi}
-                    onChange={(e) => setDeskripsi(e.target.value)}
-                    fullWidth
-                    label="fullWidth"
-                    id="fullWidth"
-                    color="warning"
-                    id="input-with-sx"
-                    label="Deskripsi"
-                    variant="standard"
-                  />
+                  <TextField InputProps={{ disableUnderline: true }} value={deskripsi} onChange={(e) => setDeskripsi(e.target.value)} fullWidth color="warning" id="input-with-sx" placeholder="Deskripsi" variant="standard" />
                 </Grid>
               </List>
             </Box>
@@ -291,27 +211,16 @@ export default function TambahPrestasi() {
                   <Grid sx={{ mr: 3, color: '#F78104' }}>
                     <PeopleAltOutlinedIcon />
                   </Grid>
-                  <TextField
-                    InputProps={{ disableUnderline: true }}
-                    value={partisipan}
-                    onChange={(e) => setPartisipan(e.target.value)}
-                    fullWidth
-                    label="fullWidth"
-                    id="fullWidth"
-                    color="warning"
-                    id="input-with-sx"
-                    label="Tambahkan Partisipan"
-                    variant="standard"
-                  />
+                  <TextField InputProps={{ disableUnderline: true }} value={partisipan} onChange={(e) => setPartisipan(e.target.value)} fullWidth color="warning" placeholder="Tambahkan Partisipan" variant="standard" />
                 </Grid>
               </List>
             </Box>
 
             <Grid item xs={12} sx={{ mb: 2 }}>
-              <ButtonSubmit type="submit" />
+              <ButtonSubmit type="submit" autocomplete="off" />
             </Grid>
-          </form>
-        </Grid>
+          </Grid>
+        </form>
         <DialogTambahPrestasi
           open={open}
           content={

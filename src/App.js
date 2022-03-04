@@ -11,6 +11,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={ListPrestasi} />
           <Route path="/tambah-prestasi" component={TambahPrestasi} />
+          <Route path="/expand-prestasi" component={ExpandPrestasi} />
         </Switch>
         {/* <ExpandPrestasi /> */}
       </div>

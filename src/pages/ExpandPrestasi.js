@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { experimentalStyled as styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Accordion from '@mui/material/Accordion';
@@ -8,6 +7,8 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import Contact from '../components/Contact';
+import { AppBar, Button, Snackbar, Box, Alert } from '@mui/material';
+import Navbar from '../components/Navbar';
 
 // icon
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -44,15 +45,18 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function ResponsiveGrid() {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(0);
 
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
+  const handleChange = (panel) => {
+    console.log(panel);
+    setExpanded(panel);
   };
 
   return (
     <>
-      <Grid elevation={2} container spacing={0.5}>
+      <Navbar>Expand Prestasi</Navbar>
+
+      <Grid mt={6} elevation={2} container spacing={3}>
         <Grid item xs>
           <Item>
             Juara 1
@@ -82,7 +86,7 @@ export default function ResponsiveGrid() {
       {lotsOfData.map((data, index) => (
         <>
           <div style={{ padding: '10px', marginTop: 10 }}>
-            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} sx={{ border: 0, bgcolor: 'f2f2f2' }}>
+            <Accordion expanded={expanded === data.id} onChange={() => handleChange(data.id)} sx={{ border: 0, bgcolor: 'f2f2f2' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: grey[50] }} style={{ color: '#000' }} />} sx={{ borderRadius: 2, bgcolor: '#f2f2f2' }}>
                 <Typography sx={{ width: '37%', flexShrink: 0, fontSize: 20, fontWeight: 'bold' }}>{data.date}</Typography>
 
@@ -106,7 +110,7 @@ export default function ResponsiveGrid() {
               </AccordionSummary>
 
               {/* contact */}
-              <AccordionDetails style={{ color: '#fff', borderTop: '2px solid rgba(0, 0, 0, .125)' }}>
+              <AccordionDetails style={{ color: '#fff' }}>
                 {data.members.map((x) => (
                   <Contact ava={x.ava} title={x.title} nama={x.nama} date={x.date} medal={x.medal} />
                 ))}

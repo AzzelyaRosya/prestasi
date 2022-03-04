@@ -14,6 +14,7 @@ import tiga from '../img/tiga.png';
 
 const lotsOfData = [
   {
+    id: 1,
     date: '2021',
     medal1: '2',
     medal2: '1',
@@ -43,6 +44,7 @@ const lotsOfData = [
     ],
   },
   {
+    id: 2,
     date: '2020',
     medal1: '5',
     medal2: '4',
@@ -72,6 +74,7 @@ const lotsOfData = [
     ],
   },
   {
+    id: 3,
     date: '2019',
     medal1: '0',
     medal2: '1',
