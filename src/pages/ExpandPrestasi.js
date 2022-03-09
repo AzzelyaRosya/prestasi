@@ -32,9 +32,8 @@ const Item = styled(Paper)(({ theme }) => ({
   fontWeight: 'bold',
   alignContent: 'center',
   alignItems: 'center',
-  width: 138,
   height: 50,
-  fontSize: 15,
+  fontSize: 17,
   borderBottomLeftRadius: 10,
   borderBottomRightRadius: 10,
   borderTopRightRadius: 10,
@@ -57,7 +56,7 @@ export default function ResponsiveGrid() {
       <Navbar>Expand Prestasi</Navbar>
 
       <Grid mt={6} elevation={2} container spacing={3}>
-        <Grid item xs>
+        <Grid item xs={4}>
           <Item>
             Juara 1
             <Typography fontWeight={'bold'} fontSize={30}>
@@ -65,7 +64,7 @@ export default function ResponsiveGrid() {
             </Typography>
           </Item>
         </Grid>
-        <Grid item xs>
+        <Grid item xs={4}>
           <Item>
             Juara 2
             <Typography fontWeight={'bold'} fontSize={30}>
@@ -73,7 +72,7 @@ export default function ResponsiveGrid() {
             </Typography>
           </Item>
         </Grid>
-        <Grid item xs>
+        <Grid item xs={4}>
           <Item>
             Juara 3
             <Typography fontWeight={'bold'} fontSize={30}>

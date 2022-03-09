@@ -27,10 +27,16 @@ import {
   InputAdornment,
   FormControl,
 } from '@mui/material';
+
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { DatePicker, MobileDatePicker } from '@mui/lab';
+
 import Navbar from '../components/Navbar';
 import ButtonSubmit from '../components/ButtonSubmit';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { orange } from '@mui/material/colors';
+import { grey } from '@mui/material/colors';
 
 // icon
 import EmojiEventsOutlinedIcon from '@mui/icons-material/EmojiEventsOutlined';
@@ -39,36 +45,26 @@ import SettingsApplicationsOutlinedIcon from '@mui/icons-material/SettingsApplic
 import DateRangeOutlinedIcon from '@mui/icons-material/DateRangeOutlined';
 import NotesOutlinedIcon from '@mui/icons-material/NotesOutlined';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
+import UploadIcon from '@mui/icons-material/Upload';
 
 const options = ['Internasional', 'Asia', 'ASEAN', 'Nasional', 'Provinsi'];
 
-const CustomCheckbox = styled(RadioGroup)(({ theme }) => ({
-  color: theme.status.danger,
-  '&.Mui-checked': {
-    color: theme.status.danger,
+const uploadButton = {
+  color: '#bfbfbf',
+  backgroundColor: '#fff',
+  '&:hover': {
+    backgroundColor: '#fff',
   },
-}));
-
-const theme = createTheme({
-  status: {
-    danger: orange[500],
-  },
-});
+  width: '100%',
+  height: 35,
+  fontSize: 16,
+  textTransform: 'capitalize',
+  boxShadow: 'none',
+  paddingRight: '2px',
+};
 
 function DialogTambahPrestasi(props) {
   const { onClose, value: valueProp, open, ...other } = props;
-
-  // React.useEffect(() => {
-  //   if (!open) {
-  //     setValue(valueProp);
-  //   }
-  // }, [valueProp, open]);
-
-  // const handleEntering = () => {
-  //   if (radioGroupRef.current != null) {
-  //     radioGroupRef.current.focus();
-  //   }
-  // };
 
   return (
     <Dialog sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 }, color: '#F78104' }} maxWidth="xs" open={open} {...other}>
@@ -85,6 +81,14 @@ DialogTambahPrestasi.propTypes = {
 };
 
 export default function TambahPrestasi() {
+  // State to store uploaded file
+  const [sertifikat, setSertifikat] = React.useState('');
+
+  // Handles file upload event and updates state
+  function handleUpload(event) {
+    setSertifikat(event.target.files[0]);
+  }
+
   const [open, setOpen] = React.useState(false);
   const radioGroupRef = React.useRef(null);
   const [kegiatan, setKegiatan] = React.useState('');
@@ -94,12 +98,43 @@ export default function TambahPrestasi() {
   const [tanggal, setTanggal] = React.useState('');
   const [deskripsi, setDeskripsi] = React.useState('');
   const [partisipan, setPartisipan] = React.useState('');
+
   const [value, setValue] = React.useState('Dione');
 
-  const handleSubmit = function (event) {
+  const handleSubmit = (event) => {
+    const dataSend = {
+      kegiatan,
+      jenis,
+      tingkatan,
+      nomor,
+      tanggal,
+      deskripsi,
+      partisipan,
+    };
+    console.log(dataSend);
     event.preventDefault();
-    console.log(`Nama Kegiatan: ${kegiatan}`, `\n`, `Jenis Prestasi: ${jenis}`, `\n`, `Tingkatan: ${tingkatan}`, `\n`, `Nomor: ${nomor}`, `\n`, `Tanggal: ${tanggal}`, `\n`, `Deskripsi: ${deskripsi}`, `\n`, `Partisipan: ${partisipan}`);
   };
+
+  // const handleSubmit = function (event) {
+  //   event.preventDefault();
+  //   console.log(
+  //     `Nama Kegiatan: ${kegiatan}`,
+  //     `\n`,
+  //     `Jenis Prestasi: ${jenis}`,
+  //     `\n`,
+  //     `Tingkatan: ${tingkatan}`,
+  //     `\n`,
+  //     `Nomor: ${nomor}`,
+  //     `\n`,
+  //     `Tanggal: ${tanggal}`,
+  //     `\n`,
+  //     `Deskripsi: ${deskripsi}`,
+  //     `\n`,
+  //     `Partisipan: ${partisipan}`,
+  //     `\n`,
+  //     `Upload Sertifikat: ${sertifikat.name}`
+  //   );
+  // };
 
   const handleTingkatan = (event) => {
     setTingkatan(event.target.value);
@@ -157,9 +192,9 @@ export default function TambahPrestasi() {
               <List sx={{ pt: 2, pb: 2 }} component="div" role="group">
                 <Grid onClick={handleClickListItem} sx={{ display: 'flex', alignItems: 'flex-end' }}>
                   <Grid sx={{ mr: 3, color: '#F78104' }}>
-                    <StarBorderIcon />{' '}
+                    <StarBorderIcon />
                   </Grid>
-                  <TextField InputProps={{ disableUnderline: true }} value={tingkatan} onChange={(e) => setTingkatan(e.target.value)} value={tingkatan} fullWidth color="warning" placeholder="Tingkatan" variant="standard" />
+                  <TextField InputProps={{ disableUnderline: true }} value={tingkatan} onChange={(e) => setTingkatan(e.target.value)} fullWidth color="warning" placeholder="Tingkatan" variant="standard" />
                 </Grid>
 
                 <DialogTambahPrestasi id="ringtone-menu" keepMounted open={open} onClose={handleClose} value={value} />
@@ -186,7 +221,18 @@ export default function TambahPrestasi() {
                   <Grid sx={{ mr: 3, color: '#F78104' }}>
                     <DateRangeOutlinedIcon />
                   </Grid>
-                  <TextField InputProps={{ disableUnderline: true }} value={tanggal} onChange={(e) => setTanggal(e.target.value)} fullWidth color="warning" placeholder="Tanggal Pertandingan" variant="standard" />
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <MobileDatePicker
+                      value={tanggal}
+                      InputProps={{
+                        disableUnderline: true,
+                      }}
+                      onChange={(newTanggal) => {
+                        setTanggal(newTanggal);
+                      }}
+                      renderInput={(params) => <TextField fullWidth placeholder="Tanggal Pertandingan" variant="standard" {...params} />}
+                    />
+                  </LocalizationProvider>
                 </Grid>
               </List>
             </Box>
@@ -216,11 +262,43 @@ export default function TambahPrestasi() {
               </List>
             </Box>
 
+            {/* Sertifikat */}
+            <Box sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper', mt: -1 }}>
+              <List Container sx={{ pt: 2, pb: 2, display: 'flex', mb: 0.5, alignItems: 'center' }} component="div" role="group">
+                <Grid sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                  <input type="file" accept=".png, .jpg, .jpeg" id="buttonfile" hidden onChange={handleUpload} />
+                  <Grid sx={{ mr: 3, color: '#F78104' }}>
+                    <UploadIcon />
+                  </Grid>
+                  {sertifikat !== '' ? (
+                    <Typography pb={1} fontSize={13} fontWeight={'bold'}>
+                      {sertifikat.name}
+                    </Typography>
+                  ) : (
+                    <label htmlFor="buttonfile">
+                      <Button component="span" fullWidth sx={uploadButton}>
+                        Upload Sertifikat
+                      </Button>
+                    </label>
+                  )}
+                </Grid>
+
+                {/* File Name */}
+
+                {/* <Typography fontSize={12} fontStyle={'italic'} color={'red'}>
+                  *Format: PNG, JPG, JPEG
+                </Typography> */}
+              </List>
+            </Box>
+
+            {/* Submit */}
             <Grid item xs={12} sx={{ mb: 2 }}>
               <ButtonSubmit type="submit" autocomplete="off" />
             </Grid>
           </Grid>
         </form>
+
+        {/* dialog for tingkatan */}
         <DialogTambahPrestasi
           open={open}
           content={
