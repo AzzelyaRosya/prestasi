@@ -4,7 +4,7 @@ import { Typography, Card, Avatar, Grid } from '@mui/material';
 export default function Contact(props) {
   return (
     <>
-      <Grid sx={{ p: 1, mb: 1 }} style={{ borderTop: '1px solid rgba(0, 0, 0, .125)' }} container wrap="nowrap" spacing={2}>
+      <Grid sx={{ p: 1, mb: 3 }} style={{ borderTop: '1px solid rgba(0, 0, 0, .125)' }} fullwidth container wrap="nowrap" spacing={2}>
         <Grid item>
           <Avatar sx={{ width: 80, height: 80 }} src={props.ava}></Avatar>
         </Grid>

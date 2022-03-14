@@ -7,7 +7,6 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import Contact from '../components/Contact';
-import { AppBar, Button, Snackbar, Box, Alert } from '@mui/material';
 import Navbar from '../components/Navbar';
 
 // icon
@@ -85,7 +84,7 @@ export default function ResponsiveGrid() {
       {lotsOfData.map((data, index) => (
         <>
           <div style={{ padding: '10px', marginTop: 10 }}>
-            <Accordion expanded={expanded === data.id} onChange={() => handleChange(data.id)} sx={{ border: 0, bgcolor: 'f2f2f2' }}>
+            <Accordion expanded={expanded === data.id} onChange={() => handleChange(data.id)} sx={{ bgcolor: 'f2f2f2' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: grey[50] }} style={{ color: '#000' }} />} sx={{ borderRadius: 2, bgcolor: '#f2f2f2' }}>
                 <Typography sx={{ width: '37%', flexShrink: 0, fontSize: 20, fontWeight: 'bold' }}>{data.date}</Typography>
 
@@ -109,7 +108,7 @@ export default function ResponsiveGrid() {
               </AccordionSummary>
 
               {/* contact */}
-              <AccordionDetails style={{ color: '#fff' }}>
+              <AccordionDetails sx={{ mb: -3 }} style={{ color: '#fff', borderTop: '1px solid rgba(0, 0, 0, .125)' }}>
                 {data.members.map((x) => (
                   <Contact ava={x.ava} title={x.title} nama={x.nama} date={x.date} medal={x.medal} />
                 ))}

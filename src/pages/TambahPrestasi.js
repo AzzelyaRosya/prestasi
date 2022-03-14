@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   List,
@@ -26,6 +26,8 @@ import {
   InputLabel,
   InputAdornment,
   FormControl,
+  Avatar,
+  Card,
 } from '@mui/material';
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -34,6 +36,9 @@ import { DatePicker, MobileDatePicker } from '@mui/lab';
 
 import Navbar from '../components/Navbar';
 import ButtonSubmit from '../components/ButtonSubmit';
+import Contact from '../components/Contact';
+import PartisipanContact from '../components/PartisipanContact';
+import partisipanData from '../components/DataPartisipan';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { orange } from '@mui/material/colors';
 import { grey } from '@mui/material/colors';
@@ -60,7 +65,6 @@ const uploadButton = {
   fontSize: 16,
   textTransform: 'capitalize',
   boxShadow: 'none',
-  paddingRight: '2px',
 };
 
 function DialogTambahPrestasi(props) {
@@ -80,6 +84,23 @@ DialogTambahPrestasi.propTypes = {
   value: PropTypes.string.isRequired,
 };
 
+function DialogTambahPartisipan(props) {
+  const { onClose, value: valueProp, open, ...other } = props;
+
+  return (
+    <Dialog sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 }, color: '#F78104' }} maxWidth="xs" open={open} {...other}>
+      <DialogContent dividers>{props.contentparti}</DialogContent>
+      <DialogActions color="warning">{props.actionparti}</DialogActions>
+    </Dialog>
+  );
+}
+
+DialogTambahPartisipan.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  value: PropTypes.string.isRequired,
+};
+
 export default function TambahPrestasi() {
   // State to store uploaded file
   const [sertifikat, setSertifikat] = React.useState('');
@@ -89,7 +110,9 @@ export default function TambahPrestasi() {
     setSertifikat(event.target.files[0]);
   }
 
+  const [data, setData] = useState(partisipanData);
   const [open, setOpen] = React.useState(false);
+  const [openPartisipan, setOpenPartisipan] = React.useState(false);
   const radioGroupRef = React.useRef(null);
   const [kegiatan, setKegiatan] = React.useState('');
   const [jenis, setJenis] = React.useState('');
@@ -100,41 +123,60 @@ export default function TambahPrestasi() {
   const [partisipan, setPartisipan] = React.useState('');
 
   const [value, setValue] = React.useState('Dione');
+  const [valuePartisipan, setValuePartispan] = React.useState('Dione');
 
-  const handleSubmit = (event) => {
-    const dataSend = {
-      kegiatan,
-      jenis,
-      tingkatan,
-      nomor,
-      tanggal,
-      deskripsi,
-      partisipan,
-    };
-    console.log(dataSend);
-    event.preventDefault();
+  const [selectedData, setSelectedData] = useState([]);
+
+  const setStyle = (e) => {
+    // console.log(selectedData);
+
+    let fselected = [...selectedData];
+    let selectedtrue = selectedData.filter((x) => x.id === e.id);
+    // console.log(fselected);
+
+    if (selectedtrue.length > 0) {
+      let withoutdouble = fselected.filter((x) => x.id !== e.id);
+      setSelectedData(withoutdouble);
+    } else {
+      fselected.push(e);
+      setSelectedData(fselected);
+    }
   };
 
-  // const handleSubmit = function (event) {
+  // const handleSubmit = (event) => {
+  //   const dataSend = {
+  //     kegiatan,
+  //     jenis,
+  //     tingkatan,
+  //     nomor,
+  //     tanggal,
+  //     deskripsi,
+  //     partisipan,
+  //   };
+  //   console.log(dataSend);
   //   event.preventDefault();
-  //   console.log(
-  //     `Nama Kegiatan: ${kegiatan}`,
-  //     `\n`,
-  //     `Jenis Prestasi: ${jenis}`,
-  //     `\n`,
-  //     `Tingkatan: ${tingkatan}`,
-  //     `\n`,
-  //     `Nomor: ${nomor}`,
-  //     `\n`,
-  //     `Tanggal: ${tanggal}`,
-  //     `\n`,
-  //     `Deskripsi: ${deskripsi}`,
-  //     `\n`,
-  //     `Partisipan: ${partisipan}`,
-  //     `\n`,
-  //     `Upload Sertifikat: ${sertifikat.name}`
-  //   );
   // };
+
+  const handleSubmit = function (event) {
+    event.preventDefault();
+    console.log(
+      `Nama Kegiatan: ${kegiatan}`,
+      `\n`,
+      `Jenis Prestasi: ${jenis}`,
+      `\n`,
+      `Tingkatan: ${tingkatan}`,
+      `\n`,
+      `Nomor: ${nomor}`,
+      `\n`,
+      `Tanggal: ${tanggal}`,
+      `\n`,
+      `Deskripsi: ${deskripsi}`,
+      `\n`,
+      `Partisipan: ${partisipan.nama}`,
+      `\n`,
+      `Upload Sertifikat: ${sertifikat.name}`
+    );
+  };
 
   const handleTingkatan = (event) => {
     setTingkatan(event.target.value);
@@ -163,6 +205,38 @@ export default function TambahPrestasi() {
 
   const handleOk = () => {
     handleClose(value);
+  };
+
+  // batas tingkatan
+
+  const handlePartisipan = (event) => {
+    setPartisipan(event.target.value);
+    console.log(event.target.value);
+  };
+
+  const handleClickContact = () => {
+    setOpenPartisipan(true);
+  };
+
+  const handleClosePartisipan = (selectedData) => {
+    setOpenPartisipan(false);
+
+    if (selectedData) {
+      setValuePartispan(selectedData);
+    }
+  };
+
+  const handleChangePartisipan = (e) => {
+    console.log(e);
+    setPartisipan(e);
+  };
+
+  const handleCancelPartispan = () => {
+    handleClosePartisipan();
+  };
+
+  const handleOkPartisipan = () => {
+    handleClosePartisipan(value);
   };
 
   return (
@@ -253,25 +327,28 @@ export default function TambahPrestasi() {
             {/* Tambahkan Partisipan */}
             <Box sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
               <List sx={{ pt: 2, pb: 2 }} component="div" role="group">
-                <Grid sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                <Grid onClick={handleClickContact} sx={{ display: 'flex', alignItems: 'flex-end' }}>
                   <Grid sx={{ mr: 3, color: '#F78104' }}>
                     <PeopleAltOutlinedIcon />
                   </Grid>
-                  <TextField InputProps={{ disableUnderline: true }} value={partisipan} onChange={(e) => setPartisipan(e.target.value)} fullWidth color="warning" placeholder="Tambahkan Partisipan" variant="standard" />
+
+                  <TextField InputProps={{ disableUnderline: true }} value={partisipan.nama} onChange={(e) => setTingkatan(e.target.value)} fullWidth color="warning" placeholder="Tambahkan Partisipan" variant="standard" />
+
+                  <DialogTambahPartisipan id="ringtone-menu" keepMounted open={openPartisipan} onClose={handleClosePartisipan} value={valuePartisipan} />
                 </Grid>
               </List>
             </Box>
 
             {/* Sertifikat */}
             <Box sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper', mt: -1 }}>
-              <List Container sx={{ pt: 2, pb: 2, display: 'flex', mb: 0.5, alignItems: 'center' }} component="div" role="group">
+              <List Container sx={{ pt: 2, pb: 2, display: 'flex', alignItems: 'center' }} component="div" role="group">
                 <Grid sx={{ display: 'flex', alignItems: 'flex-end' }}>
                   <input type="file" accept=".png, .jpg, .jpeg" id="buttonfile" hidden onChange={handleUpload} />
-                  <Grid sx={{ mr: 3, color: '#F78104' }}>
+                  <Grid mr={2} sx={{ color: '#F78104' }}>
                     <UploadIcon />
                   </Grid>
                   {sertifikat !== '' ? (
-                    <Typography pb={1} fontSize={13} fontWeight={'bold'}>
+                    <Typography pl={1} pb={1} fontSize={16}>
                       {sertifikat.name}
                     </Typography>
                   ) : (
@@ -314,6 +391,29 @@ export default function TambahPrestasi() {
                 Cancel
               </Button>
               <Button color="warning" onClick={handleOk}>
+                Ok
+              </Button>
+            </>
+          }
+        />
+
+        <DialogTambahPartisipan
+          open={openPartisipan}
+          contentparti={
+            <>
+              <div value={partisipan}>
+                {partisipanData.map((option) => (
+                  <PartisipanContact onclick={() => handleChangePartisipan(option)} value={partisipan.nama} sx={{ width: 100 }} ava={option.ava} nama={option.nama} sabuk={option.sabuk} />
+                ))}
+              </div>
+            </>
+          }
+          actionparti={
+            <>
+              <Button color="warning" autoFocus onClick={handleCancelPartispan}>
+                Cancel
+              </Button>
+              <Button color="warning" onClick={handleOkPartisipan}>
                 Ok
               </Button>
             </>
