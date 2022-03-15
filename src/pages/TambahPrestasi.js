@@ -403,7 +403,13 @@ export default function TambahPrestasi() {
             <>
               <div value={partisipan}>
                 {partisipanData.map((option) => (
-                  <PartisipanContact onclick={() => handleChangePartisipan(option)} value={partisipan.nama} sx={{ width: 100 }} ava={option.ava} nama={option.nama} sabuk={option.sabuk} />
+                  <Card
+                    onClick={() => setStyle(option)}
+                    sx={{ textAlign: 'left', my: 1, p: 2, width: '100%', border: 'none', bgcolor: `${selectedData.filter((item) => item.id === option.id).length > 0 ? 'lightgray' : '#fff'}` }}
+                    component={'button'}
+                  >
+                    <PartisipanContact onclick={() => handleChangePartisipan(option)} value={partisipan.nama} sx={{ width: 100 }} ava={option.ava} nama={option.nama} sabuk={option.sabuk} />
+                  </Card>
                 ))}
               </div>
             </>
