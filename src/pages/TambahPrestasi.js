@@ -33,6 +33,7 @@ import {
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { DatePicker, MobileDatePicker } from '@mui/lab';
+import axios from 'axios';
 
 import Navbar from '../components/Navbar';
 import ButtonSubmit from '../components/ButtonSubmit';
@@ -172,10 +173,23 @@ export default function TambahPrestasi() {
       `\n`,
       `Deskripsi: ${deskripsi}`,
       `\n`,
-      `Partisipan: ${partisipan.nama}`,
+      `Partisipan: ${partisipan.name}`,
       `\n`,
       `Upload Sertifikat: ${sertifikat.name}`
     );
+    const json = {
+      activity: kegiatan,
+      type: jenis,
+      level: tingkatan,
+      number: nomor,
+      date: tanggal,
+      desc: deskripsi,
+      participant: partisipan.name,
+      certificate: sertifikat.name,
+    };
+    axios.post('http://localhost:7070/prestasi/register', json).then((result) => {
+      console.log(result);
+    });
   };
 
   const handleTingkatan = (event) => {
@@ -408,7 +422,7 @@ export default function TambahPrestasi() {
                     sx={{ textAlign: 'left', my: 1, p: 2, width: '100%', border: 'none', bgcolor: `${selectedData.filter((item) => item.id === option.id).length > 0 ? 'lightgray' : '#fff'}` }}
                     component={'button'}
                   >
-                    <PartisipanContact onclick={() => handleChangePartisipan(option)} value={partisipan.nama} sx={{ width: 100 }} ava={option.ava} nama={option.nama} sabuk={option.sabuk} />
+                    <PartisipanContact onclick={() => handleChangePartisipan(option)} value={partisipan.name} sx={{ width: 100 }} ava={option.ava} nama={option.nama} sabuk={option.sabuk} />
                   </Card>
                 ))}
               </div>
